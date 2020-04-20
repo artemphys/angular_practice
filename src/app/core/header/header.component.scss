@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 50px;
+  background-color: #414452;
+  z-index: 1;
+}
+
+.logo {
+  color: #fff;
+
+  span {
+    vertical-align: 9px;
+  }
+}
+
+.icon {
+  color: #fff;
+  background: linear-gradient(0deg, #c1d468 50%, #ade39f 50%, #69a8b1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  height: 30px;
+  width: 30px;
+  font-size: 30px;
+  margin: 10px 5px 0 92px;
+}
