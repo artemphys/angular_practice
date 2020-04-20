@@ -1,0 +1,27 @@
+.login {
+  min-width: 200px;
+  padding-right: 50px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    margin-left: 20px;
+    min-width: 80px;
+    color: #fff;
+    font-weight: 200;
+  }
+}
+
+.userInfo {
+  color: #fff;
+
+  span {
+    margin-right: 3px;
+    vertical-align: 6px;
+  }
+}
+
+.userIcon {
+  margin: 9px 3px;
+}

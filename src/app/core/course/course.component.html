@@ -1,0 +1,28 @@
+<mat-card class="item">
+  <mat-card-title class="title">
+    <div>{{ item.title }}</div>
+    <div class="dateBlock">
+      <div>
+        <mat-icon class="icon">query_builder</mat-icon>
+        <span>{{ item.duration }}</span>
+      </div>
+      <div>
+        <mat-icon class="icon">calendar_today</mat-icon>
+        <span>{{ item.creation_date }}</span>
+      </div>
+    </div>
+  </mat-card-title>
+  <mat-card-content class="content">
+    <div>{{ item.description }}</div>
+    <div>
+      <button mat-raised-button color="primary">
+        <mat-icon class="icon">edit</mat-icon>
+        Edit
+      </button>
+      <button mat-raised-button color="primary">
+        <mat-icon class="icon">delete</mat-icon>
+        Delete
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

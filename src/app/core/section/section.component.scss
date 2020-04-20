@@ -1,0 +1,11 @@
+.section {
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  padding: 30px 92px 0 92px;
+}
+
+.addCourseContainer {
+  display: flex;
+  flex-direction: column-reverse;
+}
