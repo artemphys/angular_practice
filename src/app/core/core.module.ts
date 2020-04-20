@@ -8,11 +8,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { HeaderComponent } from './header/header.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
 import { CourseSearchComponent } from './course-search/course-search.component';
 import { SectionComponent } from './section/section.component';
 import { CoursesComponent } from './courses/courses.component';
-import { CourseItemComponent } from './course-item/course-item.component';
+import { CourseComponent } from './course/course.component';
 import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
@@ -21,8 +21,8 @@ import { FooterComponent } from './footer/footer.component';
     BreadcrumbsComponent,
     SectionComponent,
     CoursesComponent,
-    CourseItemComponent,
-    LoginComponent,
+    CourseComponent,
+    UserComponent,
     CourseSearchComponent,
     FooterComponent,
   ],

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { userData } from 'src/mocks/user';
-import { User } from 'src/app/interfaces';
+import { UserData } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { User } from 'src/app/interfaces';
 export class UserService {
   constructor() {}
 
-  public getUser(): User {
+  public getUser(): UserData {
     return userData;
   }
 }

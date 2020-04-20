@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { User, Login } from 'src/app/interfaces';
+import { User, UserData } from 'src/app/interfaces';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
 })
-export class LoginComponent implements Login {
-  public user: User;
+export class UserComponent implements User {
+  user: UserData;
 
   constructor(private userService: UserService) {}
 

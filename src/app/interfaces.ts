@@ -1,6 +1,4 @@
-import { OnInit } from '@angular/core';
-
-export type Course = {
+export type CourseData = {
   id: string;
   title: string;
   description: string;
@@ -8,20 +6,22 @@ export type Course = {
   duration: number;
 };
 
-export type User = {
+export type UserData = {
   id: string;
   first_name: string;
   last_name: string;
 };
 
-export interface Courses extends OnInit {
-  items: Course[];
+export interface Courses {
+  items: CourseData[];
+  ngOnInit(): void;
 }
 
-export interface CourseItem extends OnInit {
-  item: Course;
+export interface Course {
+  item: CourseData;
 }
 
-export interface Login extends OnInit {
-  user: User;
+export interface User {
+  user: UserData;
+  ngOnInit(): void;
 }

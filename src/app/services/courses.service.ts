@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DATA } from 'src/mocks/courses';
-import { Course } from 'src/app/interfaces';
+import { CourseData } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { Course } from 'src/app/interfaces';
 export class CoursesService {
   constructor() {}
 
-  public getAll(): Course[] {
+  public getAll(): CourseData[] {
     return DATA;
   }
 }
