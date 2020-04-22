@@ -4,7 +4,7 @@ import { CoursesComponent } from './core/courses/courses.component';
 
 const routes: Routes = [
   { path: 'courses-page', component: CoursesComponent },
-  { path: '', redirectTo: '/course-page', pathMatch: 'full' },
+  { path: '', redirectTo: '/courses-page', pathMatch: 'full' },
 ];
 
 @NgModule({
