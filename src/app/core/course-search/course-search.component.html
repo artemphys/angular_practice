@@ -1,6 +1,8 @@
-<form>
+<div>
   <mat-form-field class="searchInput">
-    <input matInput placeholder="Search courses" />
+    <input [(ngModel)]="searchValue" matInput placeholder="Search courses" />
   </mat-form-field>
-  <button mat-raised-button color="primary">Search</button>
-</form>
+  <button mat-raised-button color="primary" (click)="handleSearch()">
+    Search
+  </button>
+</div>
