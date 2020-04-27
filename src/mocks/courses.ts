@@ -4,23 +4,26 @@ export const DATA = [
     title: 'Programming for Beginners',
     description:
       'This course is meant to introduce people who have no programming experience to the world of computer science. With the tech industry becoming one of the most trending fields in the job market, learning how to program can be one of the most important and meaningful skills.',
-    creation_date: '22/12/2017',
-    duration: 30,
+    creation_date: '2020-8-22',
+    duration: 165,
+    topRated: true,
   },
   {
     id: '2',
     title: 'Python Programming Bootcamp',
     description:
       'A Complete Python Course Focused on Problem Solving that will Expand into All Python Can Do',
-    creation_date: '7/4/2019',
-    duration: 45,
+    creation_date: '2020-4-22',
+    duration: 290,
+    topRated: false,
   },
   {
     id: '3',
     title: 'Agile Scrum Mastery',
     description:
       'Learn Agile Scrum fundamentals in a fun and engaging format. And save $$$ on Agile Scrum Certification.',
-    creation_date: '14/3/2019',
-    duration: 50,
+    creation_date: '2019-3-14',
+    duration: 120,
+    topRated: true,
   },
 ];

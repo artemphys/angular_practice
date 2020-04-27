@@ -1,4 +1,18 @@
 .content {
+  min-height: 100%;
   position: relative;
   background-color: #f2f3f7;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  height: 40px;
+  padding: 0 93px;
+  line-height: 40px;
+  background-color: #414452;
+  z-index: 1;
+  color: #838793;
 }

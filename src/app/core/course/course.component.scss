@@ -1,12 +1,29 @@
 .item {
   height: 120px;
+  min-width: 600px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
-.title {
+.topRatedItem {
+  background-color: #e9f7f7;
+}
+
+.header {
   display: flex;
   justify-content: space-between;
   padding: 5px 0 10px 0;
+}
+
+.title {
+  span {
+    vertical-align: 3px;
+  }
+
+  .topRatedIcon {
+    margin-left: 3px;
+    color: #f8cf09;
+  }
 }
 
 .dateBlock {
@@ -16,7 +33,7 @@
   font-weight: 200;
   font-size: 12px;
   color: #c3c7d5;
-  opacity: 0.6;
+  opacity: 0.8;
 
   div {
     margin-left: 10px;

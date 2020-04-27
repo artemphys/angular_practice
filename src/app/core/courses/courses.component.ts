@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/interfaces';
+import { SearchPipe } from 'src/app/pipes/search.pipe';
+import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-courses',
@@ -9,11 +11,17 @@ import { Course } from 'src/app/interfaces';
 })
 export class CoursesComponent implements OnInit {
   public items: Course[];
+  public searchPipe: PipeTransform = new SearchPipe();
+  public orderByPipe: PipeTransform = new OrderByPipe();
 
   constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
-    this.items = this.coursesService.getAll();
+    this.items = this.orderByPipe.transform(
+      this.coursesService.getAll(),
+      'creation_date',
+      false
+    );
   }
 
   public onEdit(id: string): void {
@@ -30,5 +38,13 @@ export class CoursesComponent implements OnInit {
 
   public loadMore(): void {
     console.log('Load more');
+  }
+
+  public searchItems(searchValue): void {
+    if (searchValue.length < 3) {
+      return;
+    }
+
+    this.items = this.searchPipe.transform(this.items, searchValue);
   }
 }

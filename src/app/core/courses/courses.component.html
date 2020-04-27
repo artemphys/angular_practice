@@ -1,20 +1,22 @@
-<div>
-  <app-section></app-section>
-  <div class="courses">
-    <app-course
-      (onEdit)="onEdit($event)"
-      (onDelete)="onDelete($event)"
-      *ngFor="let item of items"
-      [item]="item"
-    >
-    </app-course>
-    <button
-      (click)="loadMore()"
-      class="loadMoreBtn"
-      mat-stroked-button
-      color="primary"
-    >
-      {{ "Load more" | uppercase }}
-    </button>
-  </div>
+<app-section (onSearch)="searchItems($event)"></app-section>
+<div class="courses">
+  <app-course
+    (onEdit)="onEdit($event)"
+    (onDelete)="onDelete($event)"
+    *ngFor="let item of items"
+    [item]="item"
+  >
+  </app-course>
+  <button
+    *ngIf="items?.length > 0"
+    (click)="loadMore()"
+    class="loadMoreBtn"
+    mat-stroked-button
+    color="primary"
+  >
+    {{ "Load more" | uppercase }}
+  </button>
+  <mat-card *ngIf="!items?.length" class="noDataMsg">
+    <span>No data. Feel free to add new course.</span>
+  </mat-card>
 </div>
