@@ -17,7 +17,11 @@ export class CoursesComponent implements OnInit {
   constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
-    this.items = this.orderByPipe.transform(
+    this.items = this.getItems();
+  }
+
+  private getItems(): Course[] {
+    return this.orderByPipe.transform(
       this.coursesService.getAll(),
       'creation_date',
       false
@@ -41,10 +45,6 @@ export class CoursesComponent implements OnInit {
   }
 
   public searchItems(searchValue): void {
-    if (searchValue.length < 3) {
-      return;
-    }
-
-    this.items = this.searchPipe.transform(this.items, searchValue);
+    this.items = this.searchPipe.transform(this.getItems(), searchValue);
   }
 }
