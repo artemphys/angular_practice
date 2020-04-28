@@ -1,6 +1,6 @@
 <div class="section">
   <div>
-    <app-course-search></app-course-search>
+    <app-course-search (onSearch)="handleSearch($event)"></app-course-search>
   </div>
   <div class="addCourseContainer">
     <button mat-raised-button color="primary">

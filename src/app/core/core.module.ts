@@ -15,6 +15,10 @@ import { SectionComponent } from './section/section.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseComponent } from './course/course.component';
 import { FooterComponent } from './footer/footer.component';
+import { HighlightCourseDirective } from '../directives/highlight-course.directive';
+import { DurationPipe } from '../pipes/duration.pipe';
+import { SearchPipe } from '../pipes/search.pipe';
+import { OrderByPipe } from '../pipes/order-by.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { FooterComponent } from './footer/footer.component';
     UserComponent,
     CourseSearchComponent,
     FooterComponent,
+    HighlightCourseDirective,
+    DurationPipe,
+    SearchPipe,
+    OrderByPipe,
   ],
   exports: [
     HeaderComponent,
