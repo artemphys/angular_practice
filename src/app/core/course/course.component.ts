@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Course } from 'src/app/interfaces';
 
 @Component({
@@ -6,7 +13,7 @@ import { Course } from 'src/app/interfaces';
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.scss'],
 })
-export class CourseComponent implements OnInit {
+export class CourseComponent implements OnInit, OnChanges {
   @Input() item: Course;
   @Output() onEdit: EventEmitter<string> = new EventEmitter<string>();
   @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();

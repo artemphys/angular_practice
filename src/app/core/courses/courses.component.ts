@@ -52,14 +52,16 @@ export class CoursesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.coursesService.removeItem(id);
-        this.items = this.getItems();
-
-        this.snackBar.open(`Course ${item.title} has been deleted`, 'Close', {
-          duration: 5000,
-        });
+      if (!confirmed) {
+        return;
       }
+
+      this.coursesService.removeItem(id);
+      this.items = this.getItems();
+
+      this.snackBar.open(`Course ${item.title} has been deleted`, 'Close', {
+        duration: 5000,
+      });
     });
   }
 
