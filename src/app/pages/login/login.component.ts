@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     sessionStorage.setItem('user', JSON.stringify(userData));
-    this.router.navigate(['/courses-page']);
+    this.router.navigate(['/courses']);
     console.log('Logged In successfully!');
   }
 }

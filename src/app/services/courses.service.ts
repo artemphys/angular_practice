@@ -13,8 +13,8 @@ export class CoursesService {
     return this.data;
   }
 
-  public createCourse(newItem: Course): Course[] {
-    return DATA;
+  public createCourse(newItem: Course): void {
+    this.data.push({ ...newItem, id: Date.now().toString(36) });
   }
 
   public getItemById(itemId: string): Course {

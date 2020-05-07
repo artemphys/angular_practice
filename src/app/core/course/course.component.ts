@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Course } from 'src/app/interfaces';
 
 @Component({
@@ -18,6 +19,8 @@ export class CourseComponent implements OnInit, OnChanges {
   @Output() onEdit: EventEmitter<string> = new EventEmitter<string>();
   @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
 
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
     console.log('ngOnInit');
   }
@@ -28,6 +31,7 @@ export class CourseComponent implements OnInit, OnChanges {
 
   public edit(): void {
     this.onEdit.emit(this.item.id);
+    this.router.navigate([`/courses/${this.item.id}`]);
   }
 
   public delete(): void {

@@ -5,6 +5,7 @@ export interface Course {
   creation_date: string;
   duration: number;
   topRated: boolean;
+  authors: string;
 }
 
 export interface User {

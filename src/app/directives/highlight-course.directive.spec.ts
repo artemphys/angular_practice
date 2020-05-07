@@ -14,6 +14,7 @@ const ITEM_MOCK = {
   creation_date: moment().toString(),
   duration: 290,
   topRated: false,
+  authors: '',
 };
 
 describe('HighlightCourseDirective', () => {

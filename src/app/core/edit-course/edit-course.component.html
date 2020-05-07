@@ -1,0 +1,48 @@
+<div class="container">
+  <mat-form-field class="wideInput" appearance="fill">
+    <mat-label required>Title</mat-label>
+    <input [(ngModel)]="course.title" matInput required />
+  </mat-form-field>
+
+  <mat-form-field class="wideInput" appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea [(ngModel)]="course.description" matInput required></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label required>Date</mat-label>
+    <input
+      [formControl]="date"
+      [min]="minDate"
+      matInput
+      [matDatepicker]="picker"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <br />
+  <mat-form-field class="narrowInput" appearance="fill">
+    <mat-label required>Duration(minutes)</mat-label>
+    <input [(ngModel)]="course.duration" matInput required />
+  </mat-form-field>
+
+  <mat-form-field class="wideInput" appearance="fill">
+    <mat-label required>Authors</mat-label>
+    <input [(ngModel)]="course.authors" matInput required />
+  </mat-form-field>
+
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      class="saveBtn"
+      (click)="onSave()"
+    >
+      Save
+    </button>
+    <button mat-raised-button color="default" (click)="onCancel()">
+      Cancel
+    </button>
+  </div>
+</div>

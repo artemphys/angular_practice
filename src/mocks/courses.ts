@@ -7,6 +7,7 @@ export const DATA = [
     creation_date: '2020-8-22',
     duration: 165,
     topRated: true,
+    authors: '',
   },
   {
     id: '2',
@@ -16,6 +17,7 @@ export const DATA = [
     creation_date: '2020-4-22',
     duration: 290,
     topRated: false,
+    authors: '',
   },
   {
     id: '3',
@@ -25,5 +27,6 @@ export const DATA = [
     creation_date: '2019-3-14',
     duration: 120,
     topRated: true,
+    authors: '',
   },
 ];
