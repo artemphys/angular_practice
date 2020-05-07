@@ -1,8 +1,12 @@
 import { Component, OnInit, PipeTransform } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/interfaces';
 import { SearchPipe } from 'src/app/pipes/search.pipe';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
+import { DeleteCourseModalComponent } from '../delete-course-modal/delete-course-modal.component';
 
 @Component({
   selector: 'app-courses',
@@ -14,7 +18,11 @@ export class CoursesComponent implements OnInit {
   public searchPipe: PipeTransform = new SearchPipe();
   public orderByPipe: PipeTransform = new OrderByPipe();
 
-  constructor(private coursesService: CoursesService) {}
+  constructor(
+    private coursesService: CoursesService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.items = this.getItems();
@@ -22,7 +30,7 @@ export class CoursesComponent implements OnInit {
 
   private getItems(): Course[] {
     return this.orderByPipe.transform(
-      this.coursesService.getAll(),
+      this.coursesService.getList(),
       'creation_date',
       false
     );
@@ -36,8 +44,25 @@ export class CoursesComponent implements OnInit {
   }
 
   public onDelete(id: string): void {
-    console.log('deleted:', id);
-    this.items = this.items.filter((item) => item.id !== id);
+    const item = this.coursesService.getItemById(id);
+
+    const dialogRef = this.dialog.open(DeleteCourseModalComponent, {
+      width: '400px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) {
+        return;
+      }
+
+      this.coursesService.removeItem(id);
+      this.items = this.getItems();
+
+      this.snackBar.open(`Course ${item.title} has been deleted`, 'Close', {
+        duration: 5000,
+      });
+    });
   }
 
   public loadMore(): void {

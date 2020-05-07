@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+
 import { User } from 'src/app/interfaces';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -10,9 +12,18 @@ import { User } from 'src/app/interfaces';
 export class UserComponent implements OnInit {
   user: User;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private authService: AuthorizationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getUser();
+    this.user = this.authService.getUserInfo();
+  }
+
+  public logOut(): void {
+    this.authService.logOut();
+    console.log('Logged out');
+    this.router.navigate(['/login']);
   }
 }

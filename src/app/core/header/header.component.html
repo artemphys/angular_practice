@@ -5,5 +5,5 @@
     </mat-icon>
     <span>{{ "Video course" | uppercase }}</span>
   </div>
-  <app-user></app-user>
+  <app-user *ngIf="authService.isAuthenticated()"></app-user>
 </div>
