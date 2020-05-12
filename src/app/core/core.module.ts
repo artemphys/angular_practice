@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 
 import { HeaderComponent } from './header/header.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
@@ -22,7 +24,8 @@ import { DurationPipe } from '../pipes/duration.pipe';
 import { SearchPipe } from '../pipes/search.pipe';
 import { OrderByPipe } from '../pipes/order-by.pipe';
 import { DeleteCourseModalComponent } from './delete-course-modal/delete-course-modal.component';
-import { LoginModule } from './login/login.module';
+import { EditCourseComponent } from './edit-course/edit-course.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,8 @@ import { LoginModule } from './login/login.module';
     SearchPipe,
     OrderByPipe,
     DeleteCourseModalComponent,
+    EditCourseComponent,
+    NotFoundComponent,
   ],
   exports: [
     HeaderComponent,
@@ -58,7 +63,9 @@ import { LoginModule } from './login/login.module';
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
-    LoginModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
   ],
 })
 export class CoreModule {}

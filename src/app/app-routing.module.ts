@@ -1,12 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CoursesComponent } from './core/courses/courses.component';
-import { LoginComponent } from './core/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
+import { AuthGuard } from 'src/app/services/auth-guard';
 
 export const ROUTES: Routes = [
-  { path: 'courses-page', component: CoursesComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: implement ProtectedRoutes
+  { path: '', redirectTo: 'courses', pathMatch: 'full' },
+  {
+    path: 'courses',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/courses/courses.module').then((m) => m.CoursesModule),
+  },
   { path: 'login', pathMatch: 'full', component: LoginComponent },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
