@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 import { CoursesService } from '../../services/courses.service';
+import { Course } from '../../interfaces';
 
 @Component({
   selector: 'app-edit-course',
@@ -10,15 +11,16 @@ import { CoursesService } from '../../services/courses.service';
   styleUrls: ['./edit-course.component.scss'],
 })
 export class EditCourseComponent implements OnInit {
-  @Input() course = {
-    id: '',
+  @Input() course: Course = {
+    id: 0,
     title: '',
     description: '',
-    creation_date: '',
+    creationDate: '',
     duration: 0,
     topRated: false,
-    authors: '',
+    authors: [], // TODO: Create authors Component
   };
+  @Input() authors = '';
   @Input() date = new FormControl(new Date());
 
   private courseId = null;
@@ -37,21 +39,31 @@ export class EditCourseComponent implements OnInit {
       return;
     }
 
-    this.course = this.coursesService.getItemById(this.courseId);
-    this.date = new FormControl(new Date(this.course.creation_date));
+    this.coursesService.getItemById(this.courseId).subscribe((course) => {
+      this.course = course;
+      this.date = new FormControl(new Date(course.creationDate));
+    });
   }
 
   public onSave(): void {
     const data = {
       ...this.course,
-      creation_date: this.date.value,
+      creationDate: this.date.value,
     };
 
-    this.courseId
-      ? this.coursesService.updateItem(data)
-      : this.coursesService.createCourse(data);
+    this.courseId ? this.updateCourse(data) : this.createCourse(data);
+  }
 
-    this.router.navigate(['/courses']);
+  public updateCourse(data): void {
+    this.coursesService.updateItem(data).subscribe(() => {
+      this.router.navigate(['/courses']);
+    });
+  }
+
+  public createCourse(data): void {
+    this.coursesService.createCourse(data).subscribe(() => {
+      this.router.navigate(['/courses']);
+    });
   }
 
   public onCancel(): void {

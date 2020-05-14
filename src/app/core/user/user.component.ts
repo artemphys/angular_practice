@@ -18,12 +18,13 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.authService.getUserInfo();
+    this.authService.getUserInfo().subscribe((user) => {
+      this.user = user;
+    });
   }
 
   public logOut(): void {
     this.authService.logOut();
-    console.log('Logged out');
     this.router.navigate(['/login']);
   }
 }

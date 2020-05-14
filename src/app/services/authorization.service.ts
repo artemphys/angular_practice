@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
-import { userData } from 'src/mocks/user';
+import { HttpClient } from '@angular/common/http';
+
 import { User } from 'src/app/interfaces';
+import { API_BASE_PATH } from '../constants';
+import { Observable } from 'rxjs';
+
+type authData = { token: string };
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  public logIn(user: User): void {
-    sessionStorage.setItem('user', JSON.stringify(user));
+  public logIn(login, password): Observable<authData> {
+    return this.httpClient.post<authData>(`${API_BASE_PATH}auth/login`, {
+      login,
+      password,
+    });
   }
 
   public logOut(): void {
@@ -17,10 +25,14 @@ export class AuthorizationService {
   }
 
   public isAuthenticated(): boolean {
-    return !!sessionStorage.getItem('user');
+    return !!sessionStorage.getItem('authToken');
   }
 
-  public getUserInfo(): User {
-    return userData;
+  public getUserInfo(): Observable<User> {
+    if (!this.isAuthenticated()) {
+      return;
+    }
+
+    return this.httpClient.post<User>(`${API_BASE_PATH}auth/userinfo`, {});
   }
 }

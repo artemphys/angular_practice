@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { userData } from 'src/mocks/user';
 import { Router } from '@angular/router';
+
+import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +12,17 @@ export class LoginComponent implements OnInit {
   @Input() email = '';
   @Input() password = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    public authService: AuthorizationService
+  ) {}
 
   ngOnInit(): void {}
 
   public login(): void {
-    sessionStorage.setItem('user', JSON.stringify(userData));
-    this.router.navigate(['/courses']);
-    console.log('Logged In successfully!');
+    this.authService.logIn(this.email, this.password).subscribe(({ token }) => {
+      sessionStorage.setItem('authToken', token);
+      this.router.navigate(['/courses']);
+    });
   }
 }

@@ -16,8 +16,8 @@ import { Course } from 'src/app/interfaces';
 })
 export class CourseComponent implements OnInit, OnChanges {
   @Input() item: Course;
-  @Output() onEdit: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onEdit: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onDelete: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private router: Router) {}
 
