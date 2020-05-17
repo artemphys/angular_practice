@@ -1,8 +1,8 @@
 <div class="login">
   <div class="userInfo">
     <mat-icon class="userIcon">person</mat-icon>
-    <span>{{ user.name.first }}</span>
-    <span>{{ user.name.last }}</span>
+    <span>{{ user ? user.name.first : null }}</span>
+    <span>{{ user ? user.name.last : null }}</span>
   </div>
   <button
     mat-icon-button

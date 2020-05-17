@@ -19,7 +19,7 @@ export class BreadcrumbsComponent implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((routeData) => {
         // TODO: implement Breadcrumbs later
-        console.log(routeData, this.route.snapshot);
+        // console.log(routeData, this.route.snapshot);
       });
   }
 }

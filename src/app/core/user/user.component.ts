@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from 'src/app/interfaces';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -18,9 +19,14 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getUserInfo().subscribe((user) => {
-      this.user = user;
-    });
+    this.authService.getUserInfo().subscribe(
+      (user) => {
+        this.user = user;
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err.message);
+      }
+    );
   }
 
   public logOut(): void {

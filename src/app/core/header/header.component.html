@@ -1,9 +1,9 @@
 <div class="header">
-  <div class="logo">
+  <div class="logo" (click)="goHome()">
     <mat-icon aria-hidden="false" aria-label="logo" class="icon">
       play_circle_outline
     </mat-icon>
     <span>{{ "Video course" | uppercase }}</span>
   </div>
-  <app-user *ngIf="authService.isAuthenticated()"></app-user>
+  <app-user *ngIf="isAuthenticated"></app-user>
 </div>

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const url = require("url");
-const shortid = require("shortid");
 
 module.exports = (server) => {
   router.get("/courses", (req, res, next) => {
@@ -68,7 +67,7 @@ module.exports = (server) => {
   router.post("/courses", (req, res) => {
     let courses = server.db.getState().courses;
     const data = req.body.data;
-    courses = [...courses, { ...data, id: shortid.seed(1000) }];
+    courses = [...courses, { ...data, id: new Date().valueOf() }];
 
     server.db.set("courses", courses).write();
     res.json(server.db.getState().courses);
