@@ -1,33 +1,44 @@
 import { Injectable } from '@angular/core';
-import { DATA } from 'src/mocks/courses';
 import { Course } from 'src/app/interfaces';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { API_BASE_PATH } from 'src/app/constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
-  public data = DATA;
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  public getList(): Course[] {
-    return this.data;
+  public getList(
+    start: number = 0,
+    count: number = 3,
+    textFragment: string = ''
+  ): Observable<Course[]> {
+    return this.httpClient.get<Course[]>(
+      `${API_BASE_PATH}courses?start=${start}&count=${count}&textFragment=${textFragment}`
+    );
   }
 
-  public createCourse(newItem: Course): void {
-    this.data.push({ ...newItem, id: Date.now().toString(36) });
+  public getItemById(courseId: number): Observable<Course> {
+    return this.httpClient.get<Course>(`${API_BASE_PATH}courses/${courseId}`);
   }
 
-  public getItemById(itemId: string): Course {
-    return DATA.find(({ id }) => id === itemId);
+  public updateItem(data: Course): Observable<Course[]> {
+    return this.httpClient.post<Course[]>(
+      `${API_BASE_PATH}courses/${data.id}`,
+      { data }
+    );
   }
 
-  public updateItem(updatedData: Course): void {
-    const idx = this.data.findIndex(({ id }) => id === updatedData.id);
-
-    this.data[idx] = { ...this.data[idx], ...updatedData };
+  public deleteItem(courseId: number): Observable<Course[]> {
+    return this.httpClient.delete<Course[]>(
+      `${API_BASE_PATH}courses/${courseId}`
+    );
   }
 
-  public removeItem(itemId: string): void {
-    this.data = this.data.filter(({ id }) => id !== itemId);
+  public createCourse(data: Course): Observable<Course> {
+    return this.httpClient.post<Course>(`${API_BASE_PATH}courses`, { data });
   }
 }

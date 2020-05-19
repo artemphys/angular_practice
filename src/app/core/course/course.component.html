@@ -1,7 +1,7 @@
 <mat-card
   class="item"
   [ngClass]="{ topRatedItem: item.topRated }"
-  [appHighlightCourse]="item.creation_date"
+  [appHighlightCourse]="item.creationDate"
 >
   <mat-card-title class="header">
     <div class="title">
@@ -17,7 +17,7 @@
       </div>
       <div>
         <mat-icon class="icon">calendar_today</mat-icon>
-        <span>{{ item.creation_date | date: "d MMM, y" }}</span>
+        <span>{{ item.creationDate | date: "d MMM, y" }}</span>
       </div>
     </div>
   </mat-card-title>

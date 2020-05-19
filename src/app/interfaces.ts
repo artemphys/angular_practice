@@ -1,15 +1,25 @@
 export interface Course {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  creation_date: string;
+  creationDate: string;
   duration: number;
   topRated: boolean;
-  authors: string;
+  authors: Author[];
+}
+
+export interface Author {
+  id: string;
+  name: string;
 }
 
 export interface User {
   id: string;
-  first_name: string;
-  last_name: string;
+  fakeToken: string;
+  name: {
+    first: string;
+    last: string;
+  };
+  login: string;
+  password: string;
 }

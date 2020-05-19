@@ -8,15 +8,15 @@ describe('OrderByPipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('should order ASC by creation_date', () => {
-    const items = pipe.transform(DATA, 'creation_date');
+  it('should order ASC by creationDate', () => {
+    const items = pipe.transform(DATA, 'creationDate');
     expect(items[0].id).toBe('3');
     expect(items[1].id).toBe('2');
     expect(items[2].id).toBe('1');
   });
 
-  it('should order DESC by creation_date', () => {
-    const items = pipe.transform(DATA, 'creation_date', false);
+  it('should order DESC by creationDate', () => {
+    const items = pipe.transform(DATA, 'creationDate', false);
     expect(items[0].id).toBe('1');
     expect(items[1].id).toBe('2');
     expect(items[2].id).toBe('3');

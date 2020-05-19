@@ -1,10 +1,15 @@
 <div class="login">
   <div class="userInfo">
     <mat-icon class="userIcon">person</mat-icon>
-    <span>{{ user.first_name }}</span>
-    <span>{{ user.last_name }}</span>
+    <span>{{ user ? user.name.first : null }}</span>
+    <span>{{ user ? user.name.last : null }}</span>
   </div>
-  <button mat-icon-button color="primary" aria-label="user logout" (click)="logOut()">
+  <button
+    mat-icon-button
+    color="primary"
+    aria-label="user logout"
+    (click)="logOut()"
+  >
     <mat-icon>logout</mat-icon>
     <span>Log off</span>
   </button>
