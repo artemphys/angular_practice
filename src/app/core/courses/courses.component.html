@@ -3,12 +3,12 @@
   <app-course
     (onEdit)="onEdit($event)"
     (onDelete)="onDelete($event)"
-    *ngFor="let item of items | async"
+    *ngFor="let item of items"
     [item]="item"
   >
   </app-course>
   <button
-    *ngIf="(items | async)?.length"
+    *ngIf="items.length"
     (click)="loadMore()"
     class="loadMoreBtn"
     mat-stroked-button
@@ -16,7 +16,7 @@
   >
     {{ "Load more" | uppercase }}
   </button>
-  <mat-card *ngIf="!(items | async)?.length" class="noDataMsg">
+  <mat-card *ngIf="!items.length" class="noDataMsg">
     <span>No data. Feel free to add new course.</span>
   </mat-card>
 </div>

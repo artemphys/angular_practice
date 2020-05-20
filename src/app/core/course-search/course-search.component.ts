@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-course-search',
@@ -6,12 +8,27 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./course-search.component.scss'],
 })
 export class CourseSearchComponent implements OnInit {
-  @Input() searchValue = '';
+  private searchInput = new Subject<string>();
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>();
 
-  ngOnInit(): void {}
+  public searchInput$ = this.searchInput.asObservable();
 
-  public handleSearch(): void {
-    this.onSearch.emit(this.searchValue);
+  public onChange({ target: { value } }): void {
+    if (!value.length) {
+      this.searchInput.next('');
+      return;
+    }
+
+    if (value.length < 3) {
+      return;
+    }
+
+    this.searchInput.next(value);
+  }
+
+  ngOnInit(): void {
+    this.searchInput$
+      .pipe(debounceTime(1000))
+      .subscribe((input) => this.onSearch.emit(input));
   }
 }

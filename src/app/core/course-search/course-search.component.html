@@ -1,8 +1,5 @@
 <div>
   <mat-form-field class="searchInput">
-    <input [(ngModel)]="searchValue" matInput placeholder="Search courses" />
+    <input (input)="onChange($event)" matInput placeholder="Search courses" />
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="handleSearch()">
-    Search
-  </button>
 </div>

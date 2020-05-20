@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
 
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/interfaces';
@@ -13,7 +12,7 @@ import { DeleteCourseModalComponent } from '../delete-course-modal/delete-course
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
-  public items: Observable<Course[]>;
+  @Input() items: Course[] = [];
   public coursesCount: number = 3;
 
   constructor(
@@ -23,7 +22,19 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.items = this.coursesService.getList();
+    this.getCourses();
+  }
+
+  getCourses(
+    start: number = 0,
+    count: number = 3,
+    textFragment: string = ''
+  ): void {
+    this.coursesService
+      .getList(start, count, textFragment)
+      .subscribe((items) => {
+        this.items = items;
+      });
   }
 
   public onEdit(id: string): void {
@@ -48,7 +59,7 @@ export class CoursesComponent implements OnInit {
       }
 
       this.coursesService.deleteItem(course.id).subscribe(() => {
-        this.items = this.coursesService.getList();
+        this.getCourses();
 
         this.snackBar.open(`Course ${course.title} has been deleted`, 'Close', {
           duration: 5000,
@@ -59,13 +70,10 @@ export class CoursesComponent implements OnInit {
 
   public loadMore(): void {
     this.coursesCount = this.coursesCount + 3;
-    this.items = this.coursesService.getList(
-      this.coursesCount,
-      this.coursesCount
-    );
+    this.getCourses(this.coursesCount, this.coursesCount);
   }
 
   public searchItems(textFragment): void {
-    this.items = this.coursesService.getList(0, 3, textFragment);
+    this.getCourses(0, 3, textFragment);
   }
 }

@@ -7,23 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: CoursesComponent,
-    data: {
-      breadcrumb: 'courses',
-    },
   },
   {
     path: 'new',
     component: EditCourseComponent,
-    data: {
-      breadcrumb: 'new',
-    },
   },
   {
     path: ':id',
     component: EditCourseComponent,
-    data: {
-      breadcrumb: 'id',
-    },
   },
 ];
 

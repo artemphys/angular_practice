@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HeaderComponent } from './header/header.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
@@ -26,6 +27,7 @@ import { OrderByPipe } from '../pipes/order-by.pipe';
 import { DeleteCourseModalComponent } from './delete-course-modal/delete-course-modal.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { LoadingBlockComponent } from './loading-block/loading-block.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     DeleteCourseModalComponent,
     EditCourseComponent,
     NotFoundComponent,
+    LoadingBlockComponent,
   ],
   exports: [
     HeaderComponent,
@@ -51,6 +54,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SectionComponent,
     CoursesComponent,
     FooterComponent,
+    LoadingBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +70,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class CoreModule {}
