@@ -16,7 +16,9 @@ export class CourseComponent {
 
   public edit(): void {
     this.onEdit.emit(this.item.id);
-    this.router.navigate([`/courses/${this.item.id}`]);
+    this.router.navigate([`/courses/${this.item.id}`], {
+      state: { title: this.item.title },
+    });
   }
 
   public delete(): void {

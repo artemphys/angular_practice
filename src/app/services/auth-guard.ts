@@ -28,9 +28,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | UrlTree {
     return new Observable((subscriber) =>
       subscriber.next(
-        this.authorizationService.isAuthenticated()
-          ? true
-          : this.router.parseUrl('/login')
+        this.authorizationService.isAuthenticated() ||
+          this.router.parseUrl('/login')
       )
     );
   }

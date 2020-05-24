@@ -1,3 +1,8 @@
 <div class="breadcrumbs">
-  <span>Courses</span>
+  <span class="active">
+    <a routerLink="/courses" (click)="navigate(breadcrumbsItems[0])">
+      {{ breadcrumbsItems[0] }}
+    </a>
+  </span>
+  <span *ngIf="breadcrumbsItems[1]">/ {{ breadcrumbsItems[1] }}</span>
 </div>

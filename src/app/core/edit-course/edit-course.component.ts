@@ -1,16 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { CoursesService } from '../../services/courses.service';
 import { Course } from '../../interfaces';
+import { BreadcrumbsService } from '../../services/breadcrumbs.service';
 
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
   styleUrls: ['./edit-course.component.scss'],
 })
-export class EditCourseComponent implements OnInit {
+export class EditCourseComponent implements OnInit, OnDestroy {
+  public subscription: Subscription = new Subscription();
   @Input() course: Course = {
     id: 0,
     title: '',
@@ -29,20 +32,30 @@ export class EditCourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private breadcrumbsService: BreadcrumbsService
   ) {}
 
   ngOnInit(): void {
     this.courseId = this.route.snapshot.paramMap.get('id');
 
     if (!this.courseId) {
+      this.breadcrumbsService.set(['courses', 'New course']);
       return;
     }
 
-    this.coursesService.getItemById(this.courseId).subscribe((course) => {
-      this.course = course;
-      this.date = new FormControl(new Date(course.creationDate));
-    });
+    this.subscription.add(
+      this.coursesService.getItemById(this.courseId).subscribe((course) => {
+        this.course = course;
+        this.date = new FormControl(new Date(course.creationDate));
+
+        this.breadcrumbsService.set(['courses', course.title]);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public onSave(): void {
@@ -55,15 +68,19 @@ export class EditCourseComponent implements OnInit {
   }
 
   public updateCourse(data): void {
-    this.coursesService.updateItem(data).subscribe(() => {
-      this.router.navigate(['/courses']);
-    });
+    this.subscription.add(
+      this.coursesService.updateItem(data).subscribe(() => {
+        this.router.navigate(['/courses']);
+      })
+    );
   }
 
   public createCourse(data): void {
-    this.coursesService.createCourse(data).subscribe(() => {
-      this.router.navigate(['/courses']);
-    });
+    this.subscription.add(
+      this.coursesService.createCourse(data).subscribe(() => {
+        this.router.navigate(['/courses']);
+      })
+    );
   }
 
   public onCancel(): void {

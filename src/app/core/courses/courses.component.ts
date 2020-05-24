@@ -1,28 +1,37 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/interfaces';
 import { DeleteCourseModalComponent } from '../delete-course-modal/delete-course-modal.component';
+import { Subscription } from 'rxjs';
+import { BreadcrumbsService } from '../../services/breadcrumbs.service';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
+  public subscription: Subscription = new Subscription();
   @Input() items: Course[] = [];
   public coursesCount: number = 3;
 
   constructor(
     private coursesService: CoursesService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private breadcrumbsService: BreadcrumbsService
   ) {}
 
   ngOnInit(): void {
     this.getCourses();
+    this.breadcrumbsService.set(['courses']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getCourses(
@@ -30,11 +39,13 @@ export class CoursesComponent implements OnInit {
     count: number = 3,
     textFragment: string = ''
   ): void {
-    this.coursesService
-      .getList(start, count, textFragment)
-      .subscribe((items) => {
-        this.items = items;
-      });
+    this.subscription.add(
+      this.coursesService
+        .getList(start, count, textFragment)
+        .subscribe((items) => {
+          this.items = items;
+        })
+    );
   }
 
   public onEdit(id: string): void {
@@ -42,9 +53,11 @@ export class CoursesComponent implements OnInit {
   }
 
   public onDelete(id: number): void {
-    this.coursesService
-      .getItemById(id)
-      .subscribe((course) => this.openDeleteDialog(course));
+    this.subscription.add(
+      this.coursesService
+        .getItemById(id)
+        .subscribe((course) => this.openDeleteDialog(course))
+    );
   }
 
   openDeleteDialog(course): void {
@@ -53,19 +66,27 @@ export class CoursesComponent implements OnInit {
       data: course,
     });
 
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (!confirmed) {
-        return;
-      }
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (!confirmed) {
+          return;
+        }
 
+        this.deleteCourse(course);
+      })
+    );
+  }
+
+  public deleteCourse(course: Course): void {
+    this.subscription.add(
       this.coursesService.deleteItem(course.id).subscribe(() => {
         this.getCourses();
 
         this.snackBar.open(`Course ${course.title} has been deleted`, 'Close', {
           duration: 5000,
         });
-      });
-    });
+      })
+    );
   }
 
   public loadMore(): void {
