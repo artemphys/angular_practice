@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -10,19 +10,23 @@ import { BreadcrumbsService } from '../../services/breadcrumbs.service';
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
-  public subscription: Subscription = new Subscription();
+  public subscription: Subscription;
   public breadcrumbsItems: string[] = ['courses'];
 
   constructor(
     private router: Router,
-    private breadcrumbsService: BreadcrumbsService
-  ) {}
+    private breadcrumbsService: BreadcrumbsService,
+    private ref: ChangeDetectorRef
+  ) {
+    ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 1000);
+  }
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.breadcrumbsService.breadcrumbs.subscribe(
-        (items) => (this.breadcrumbsItems = items)
-      )
+    this.subscription = this.breadcrumbsService.breadcrumbs.subscribe(
+      (items) => (this.breadcrumbsItems = items)
     );
   }
 
