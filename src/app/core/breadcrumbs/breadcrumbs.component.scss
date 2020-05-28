@@ -4,3 +4,13 @@
   padding-left: 95px;
   background-color: #fff;
 }
+
+.active {
+  color: dodgerblue;
+  text-transform: capitalize;
+
+  :hover {
+    color: #3f51b5;
+    cursor: pointer;
+  }
+}

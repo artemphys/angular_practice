@@ -1,25 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { BreadcrumbsService } from '../../services/breadcrumbs.service';
 
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
 })
-export class BreadcrumbsComponent implements OnInit {
-  public breadcrumbsItems: string[];
+export class BreadcrumbsComponent implements OnInit, OnDestroy {
+  public subscription: Subscription;
+  public breadcrumbsItems: string[] = ['courses'];
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private breadcrumbsService: BreadcrumbsService,
+    private ref: ChangeDetectorRef
+  ) {
+    ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 1000);
+  }
 
   ngOnInit(): void {
-    this.breadcrumbsItems = [''];
+    this.subscription = this.breadcrumbsService.breadcrumbs.subscribe(
+      (items) => (this.breadcrumbsItems = items)
+    );
+  }
 
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeData) => {
-        // TODO: implement Breadcrumbs later
-        // console.log(routeData, this.route.snapshot);
-      });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  public navigate(path: string): void {
+    this.router.navigate([path]);
   }
 }
