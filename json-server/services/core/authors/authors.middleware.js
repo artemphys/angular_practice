@@ -1,7 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const url = require('url');
 
-module.exports = (server) => {	
-	return router;
+module.exports = (server) => {
+  router.get("/authors", (req, res) => {
+    let authors = server.db.getState().authors;
+
+    res.json(authors);
+  });
+
+  return router;
 };

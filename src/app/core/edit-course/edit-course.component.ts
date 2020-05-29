@@ -1,11 +1,24 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { CoursesService } from '../../services/courses.service';
-import { Course } from '../../interfaces';
+import { AuthorsService } from '../../services/authors.service';
 import { BreadcrumbsService } from '../../services/breadcrumbs.service';
+import { Author } from '../../interfaces';
+
+const authorsValidator = (): ValidatorFn => {
+  return (control: AbstractControl): { [key: string]: boolean } | null => {
+    return !control.value.length ? { empty: true } : null;
+  };
+};
 
 @Component({
   selector: 'app-edit-course',
@@ -14,30 +27,36 @@ import { BreadcrumbsService } from '../../services/breadcrumbs.service';
 })
 export class EditCourseComponent implements OnInit, OnDestroy {
   public subscription: Subscription = new Subscription();
-  @Input() course: Course = {
-    id: 0,
-    title: '',
-    description: '',
-    creationDate: '',
-    duration: 0,
-    topRated: false,
-    authors: [], // TODO: Create authors Component
-  };
-  @Input() authors = '';
-  @Input() date = new FormControl(new Date());
-
+  public form: FormGroup;
   private courseId = null;
-  minDate = new Date();
+  authorsList: Author[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private coursesService: CoursesService,
-    private breadcrumbsService: BreadcrumbsService
-  ) {}
+    private authorsService: AuthorsService,
+    private breadcrumbsService: BreadcrumbsService,
+    fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      title: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
+      creationDate: [new Date(), Validators.required],
+      duration: [0, Validators.required],
+      topRated: [false],
+      authors: [[], [authorsValidator()]],
+    });
+  }
 
   ngOnInit(): void {
     this.courseId = this.route.snapshot.paramMap.get('id');
+
+    this.subscription.add(
+      this.authorsService
+        .getList()
+        .subscribe((authors) => (this.authorsList = authors))
+    );
 
     if (!this.courseId) {
       this.breadcrumbsService.set(['courses', 'New course']);
@@ -45,12 +64,29 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     }
 
     this.subscription.add(
-      this.coursesService.getItemById(this.courseId).subscribe((course) => {
-        this.course = course;
-        this.date = new FormControl(new Date(course.creationDate));
+      this.coursesService
+        .getItemById(this.courseId)
+        .subscribe(
+          ({
+            title,
+            description,
+            creationDate,
+            duration,
+            topRated,
+            authors,
+          }) => {
+            this.form.patchValue({
+              title,
+              description,
+              creationDate,
+              duration,
+              topRated,
+              authors,
+            });
 
-        this.breadcrumbsService.set(['courses', course.title]);
-      })
+            this.breadcrumbsService.set(['courses', title]);
+          }
+        )
     );
   }
 
@@ -58,10 +94,15 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  public onFormSubmit(): void {
+    if (this.form.valid) {
+      this.onSave();
+    }
+  }
+
   public onSave(): void {
     const data = {
-      ...this.course,
-      creationDate: this.date.value,
+      ...this.form.value,
     };
 
     this.courseId ? this.updateCourse(data) : this.createCourse(data);
@@ -69,9 +110,11 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
   public updateCourse(data): void {
     this.subscription.add(
-      this.coursesService.updateItem(data).subscribe(() => {
-        this.router.navigate(['/courses']);
-      })
+      this.coursesService
+        .updateItem({ ...data, id: this.courseId })
+        .subscribe(() => {
+          this.router.navigate(['/courses']);
+        })
     );
   }
 

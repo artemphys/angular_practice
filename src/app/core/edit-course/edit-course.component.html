@@ -1,48 +1,48 @@
 <div class="container">
-  <mat-form-field class="wideInput" appearance="fill">
-    <mat-label required>Title</mat-label>
-    <input [(ngModel)]="course.title" matInput required />
-  </mat-form-field>
+  <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+    <app-title-input></app-title-input>
 
-  <mat-form-field class="wideInput" appearance="fill">
-    <mat-label>Description</mat-label>
-    <textarea [(ngModel)]="course.description" matInput required></textarea>
-  </mat-form-field>
+    <mat-form-field class="wideInput" appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput></textarea>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label required>Date</mat-label>
-    <input
-      [formControl]="date"
-      [min]="minDate"
-      matInput
-      [matDatepicker]="picker"
-      required
-    />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <br />
-  <mat-form-field class="narrowInput" appearance="fill">
-    <mat-label required>Duration(minutes)</mat-label>
-    <input [(ngModel)]="course.duration" matInput required />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label required>Date</mat-label>
+      <input formControlName="creationDate" matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="narrowInput" appearance="fill">
+      <mat-label required>Duration(minutes)</mat-label>
+      <input formControlName="duration" matInput type="number" />
+    </mat-form-field>
 
-  <mat-form-field class="wideInput" appearance="fill">
-    <mat-label required>Authors</mat-label>
-    <input [(ngModel)]="authors" matInput required />
-  </mat-form-field>
-
-  <div>
-    <button
-      mat-raised-button
-      color="primary"
-      class="saveBtn"
-      (click)="onSave()"
-    >
-      Save
-    </button>
-    <button mat-raised-button color="default" (click)="onCancel()">
-      Cancel
-    </button>
-  </div>
+    <mat-form-field class="wideInput" appearance="fill">
+      <mat-label required>Authors</mat-label>
+      <mat-select formControlName="authors" multiple>
+        <mat-option *ngFor="let author of authorsList" [value]="author.id">
+          {{ author.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.authors.errors">
+        Please select at least one author
+      </mat-error>
+    </mat-form-field>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="saveBtn"
+        type="submit"
+        [disabled]="!form.valid || form.pristine"
+      >
+        Save
+      </button>
+      <button mat-raised-button color="default" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
 </div>
