@@ -1,0 +1,6 @@
+<form *ngIf="titleFormGroup" [formGroup]="titleFormGroup">
+  <mat-form-field class="wideInput" appearance="fill">
+    <mat-label required>Title</mat-label>
+    <input formControlName="title" matInput />
+  </mat-form-field>
+</form>

@@ -11,6 +11,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 
 import { HeaderComponent } from './header/header.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
@@ -28,6 +29,7 @@ import { DeleteCourseModalComponent } from './delete-course-modal/delete-course-
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoadingBlockComponent } from './loading-block/loading-block.component';
+import { TitleInputComponent } from './form-fields/title-input/title-input.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { LoadingBlockComponent } from './loading-block/loading-block.component';
     EditCourseComponent,
     NotFoundComponent,
     LoadingBlockComponent,
+    TitleInputComponent,
   ],
   exports: [
     HeaderComponent,
@@ -71,6 +74,7 @@ import { LoadingBlockComponent } from './loading-block/loading-block.component';
     MatNativeDateModule,
     MatRippleModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
   ],
 })
 export class CoreModule {}

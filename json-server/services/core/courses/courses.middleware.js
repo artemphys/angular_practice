@@ -47,7 +47,7 @@ module.exports = (server) => {
 
     const courseIdx = courses.findIndex((course) => course.id === courseId);
     const updatedData = req.body.data;
-    courses[courseIdx] = { ...updatedData };
+    courses[courseIdx] = { ...updatedData, id: courseId };
 
     server.db.set("courses", courses).write();
     res.json(server.db.getState().courses);
